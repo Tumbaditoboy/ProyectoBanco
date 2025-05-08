@@ -17,6 +17,10 @@ import org.hibernate.Session;
  */
 public class UsuarioDAO {
     
+    /**
+     * Metodo que obtiene todos los valores en la tabla Usuario de acuerdo con el mapeo de las columnas en la clase Usuario.
+     * @return Una lista llamada "Usuarios" con los valores contenidos en las columnas de la base de datos.
+     */
     public static List<Usuario> getAll(){
         List<Usuario> usuarios = new ArrayList<>();
         try{
