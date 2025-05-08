@@ -11,4 +11,5 @@
         <maven.compiler.target>22</maven.compiler.target>
         <exec.mainClass>mx.itson.banco.Banco</exec.mainClass>
     </properties>
+    <name>Banco</name>
 </project>
