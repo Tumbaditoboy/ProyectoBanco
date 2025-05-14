@@ -9,6 +9,6 @@ package mx.itson.banco.utils;
  * @author Akane
  */
 public enum TipoUsuario {
-    NORMAL,
-    ADMIN
+    normal,
+    admin
 }
