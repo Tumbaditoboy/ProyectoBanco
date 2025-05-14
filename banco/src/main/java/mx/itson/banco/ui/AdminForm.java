@@ -4,6 +4,13 @@
  */
 package mx.itson.banco.ui;
 
+import java.util.ArrayList;
+import java.util.List;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import mx.itson.banco.entities.Usuario;
+import mx.itson.banco.persistence.UsuarioDAO;
+
 /**
  *
  * @author Akane
@@ -16,7 +23,7 @@ public class AdminForm extends javax.swing.JFrame {
     public AdminForm() {
         initComponents();
     }
-
+    private List<Usuario> usuarios = new ArrayList<>();
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -32,6 +39,11 @@ public class AdminForm extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                formWindowOpened(evt);
+            }
+        });
 
         jLabel1.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         jLabel1.setText("¡Bienvenido Admin!");
@@ -80,6 +92,26 @@ public class AdminForm extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+        cargarUsuarios();
+    }//GEN-LAST:event_formWindowOpened
+
+    
+    private void cargarUsuarios(){
+        usuarios = UsuarioDAO.getAll();
+        DefaultTableModel modelo =(DefaultTableModel) tblAdmin.getModel();
+        modelo.setRowCount(0);
+        
+        for (Usuario u : usuarios){
+            modelo.addRow(new Object[] {
+                u.getId(),
+                u.getNombre(),
+                u.getCorreo(),
+                u.getSaldo()
+            });
+        }
+    }
 
     /**
      * @param args the command line arguments
