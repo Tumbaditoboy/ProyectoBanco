@@ -4,6 +4,8 @@
  */
 package mx.itson.banco.ui;
 
+import mx.itson.banco.entities.Usuario;
+
 /**
  *
  * @author Akane
@@ -13,10 +15,20 @@ public class NormalForm extends javax.swing.JFrame {
     /**
      * Creates new form NormalForm
      */
-    public NormalForm() {
+    private Usuario usuario;
+    public NormalForm(Usuario usuario) {
         initComponents();
+    this.usuario = usuario;
+    mostrarInformacionUsuario();
+        
     }
 
+    private void mostrarInformacionUsuario() {
+        if (usuario != null) {
+            lblNombre.setText("Nombre: " + usuario.getNombre());
+            lblSaldo.setText("Saldo: $" + usuario.getSaldo());
+        }
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -101,7 +113,10 @@ public class NormalForm extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new NormalForm().setVisible(true);
+            Usuario usuarioPrueba = new Usuario();
+            usuarioPrueba.setNombre("Prueba Usuario");
+            usuarioPrueba.setSaldo(1500);
+                new NormalForm(usuarioPrueba).setVisible(true);
             }
         });
     }

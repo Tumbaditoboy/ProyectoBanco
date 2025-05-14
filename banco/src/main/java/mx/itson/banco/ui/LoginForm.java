@@ -4,6 +4,10 @@
  */
 package mx.itson.banco.ui;
 
+import javax.swing.JOptionPane;
+import mx.itson.banco.entities.Usuario;
+import mx.itson.banco.persistence.UsuarioDAO;
+
 /**
  *
  * @author Akane
@@ -48,8 +52,12 @@ public class LoginForm extends javax.swing.JFrame {
 
         btnAceptar.setBackground(new java.awt.Color(255, 255, 204));
         btnAceptar.setFont(new java.awt.Font("Dialog", 1, 11)); // NOI18N
-        btnAceptar.setForeground(new java.awt.Color(0, 0, 0));
         btnAceptar.setText("Aceptar");
+        btnAceptar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAceptarActionPerformed(evt);
+            }
+        });
 
         btnRegistro.setFont(new java.awt.Font("Dialog", 1, 11)); // NOI18N
         btnRegistro.setText("Registrarse");
@@ -111,6 +119,21 @@ public class LoginForm extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
+    String correo = txtCorreo.getText();
+    String contrasena = new String(pswContrasena.getPassword());
+
+    Usuario usuario = UsuarioDAO.getUsuarioPorCredenciales(correo, contrasena);
+
+    if (usuario != null) {
+        NormalForm normalForm = new NormalForm(usuario);
+        normalForm.setVisible(true);
+        this.dispose();
+    } else {
+        JOptionPane.showMessageDialog(this, "Credenciales incorrectas", "Error", JOptionPane.ERROR_MESSAGE);
+    }
+    }//GEN-LAST:event_btnAceptarActionPerformed
 
     /**
      * @param args the command line arguments
