@@ -30,10 +30,10 @@ public class LoginForm extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         txtCorreo = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
-        txtContrasena = new javax.swing.JTextField();
         btnAceptar = new javax.swing.JButton();
         btnRegistro = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
+        pswContrasena = new javax.swing.JPasswordField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -67,9 +67,9 @@ public class LoginForm extends javax.swing.JFrame {
                         .addGap(67, 67, 67)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jLabel2)
-                            .addComponent(txtCorreo)
+                            .addComponent(txtCorreo, javax.swing.GroupLayout.DEFAULT_SIZE, 273, Short.MAX_VALUE)
                             .addComponent(jLabel3)
-                            .addComponent(txtContrasena, javax.swing.GroupLayout.DEFAULT_SIZE, 273, Short.MAX_VALUE)))
+                            .addComponent(pswContrasena)))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(147, 147, 147)
                         .addComponent(jLabel1))
@@ -99,8 +99,8 @@ public class LoginForm extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtContrasena, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addComponent(pswContrasena, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnAceptar)
                 .addGap(18, 18, 18)
                 .addComponent(jLabel4)
@@ -154,7 +154,7 @@ public class LoginForm extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JTextField txtContrasena;
+    private javax.swing.JPasswordField pswContrasena;
     private javax.swing.JTextField txtCorreo;
     // End of variables declaration//GEN-END:variables
 }

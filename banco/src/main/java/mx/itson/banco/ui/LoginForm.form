@@ -29,9 +29,9 @@
                       <EmptySpace min="-2" pref="67" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
                           <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
-                          <Component id="txtCorreo" max="32767" attributes="0"/>
+                          <Component id="txtCorreo" pref="273" max="32767" attributes="0"/>
                           <Component id="jLabel3" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Component id="txtContrasena" alignment="0" pref="273" max="32767" attributes="0"/>
+                          <Component id="pswContrasena" alignment="0" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
@@ -72,8 +72,8 @@
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Component id="jLabel3" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="txtContrasena" min="-2" max="-2" attributes="0"/>
-              <EmptySpace type="separate" max="-2" attributes="0"/>
+              <Component id="pswContrasena" min="-2" pref="25" max="-2" attributes="0"/>
+              <EmptySpace type="unrelated" max="-2" attributes="0"/>
               <Component id="btnAceptar" min="-2" max="-2" attributes="0"/>
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Component id="jLabel4" min="-2" max="-2" attributes="0"/>
@@ -111,8 +111,6 @@
         <Property name="text" type="java.lang.String" value="Contrasena:"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JTextField" name="txtContrasena">
-    </Component>
     <Component class="javax.swing.JButton" name="btnAceptar">
       <Properties>
         <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
@@ -142,6 +140,8 @@
         </Property>
         <Property name="text" type="java.lang.String" value="&#xbf;Eres un nuevo usuario?"/>
       </Properties>
+    </Component>
+    <Component class="javax.swing.JPasswordField" name="pswContrasena">
     </Component>
   </SubComponents>
 </Form>
