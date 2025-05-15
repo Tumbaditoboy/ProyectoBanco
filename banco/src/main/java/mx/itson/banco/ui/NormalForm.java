@@ -25,7 +25,7 @@ public class NormalForm extends javax.swing.JFrame {
 
     private void mostrarInformacionUsuario() {
         if (usuario != null) {
-            lblNombre.setText("Nombre: " + usuario.getNombre());
+            lblNombre.setText("Bienvenido " + usuario.getNombre() + "!");
             lblSaldo.setText("Saldo: $" + usuario.getSaldo());
         }
     }
