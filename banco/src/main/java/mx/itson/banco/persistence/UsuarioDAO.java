@@ -35,20 +35,22 @@ public class UsuarioDAO {
         }
         return usuarios;
     }
-    public static Usuario getUsuarioPorCredenciales(String correo, String contrasena) {
-        Usuario usuario = null;
-        try {
-            Session session = HibernateUtil.getSessionFactory().openSession();
-            String hql = "FROM Usuario WHERE correo = :correo AND contrasena = :contrasena";
-            usuario = session.createQuery(hql, Usuario.class)
-                    .setParameter("correo", correo)
-                    .setParameter("contrasena", contrasena)
-                    .uniqueResult();
-            session.close();
-        } catch (Exception ex) {
-            System.err.println("Error al obtener el usuario: " + ex.getMessage());
-        }
-        return usuario;
+    
+public static Usuario getUsuarioPorCredenciales(String correo, String contrasena) {
+    Usuario usuario = null;
+    try {
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        String hql = "FROM Usuario WHERE correo = :correo AND contrasena = :contrasena";
+        usuario = session.createQuery(hql, Usuario.class)
+                .setParameter("correo", correo)
+                .setParameter("contrasena", contrasena)
+                .uniqueResult();
+        session.close();
+    } catch (Exception ex) {
+        System.err.println("Error al obtener el usuario: " + ex.getMessage());
     }
+    return usuario;
+}
+
     
 }

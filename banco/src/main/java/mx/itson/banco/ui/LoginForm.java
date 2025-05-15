@@ -7,6 +7,7 @@ package mx.itson.banco.ui;
 import javax.swing.JOptionPane;
 import mx.itson.banco.entities.Usuario;
 import mx.itson.banco.persistence.UsuarioDAO;
+import mx.itson.banco.utils.TipoUsuario;
 
 /**
  *
@@ -127,12 +128,23 @@ public class LoginForm extends javax.swing.JFrame {
     Usuario usuario = UsuarioDAO.getUsuarioPorCredenciales(correo, contrasena);
 
     if (usuario != null) {
-        NormalForm normalForm = new NormalForm(usuario);
-        normalForm.setVisible(true);
-        this.dispose();
+        TipoUsuario tipo = usuario.getTipo();
+
+        if (tipo == TipoUsuario.admin) {
+            AdminForm adminForm = new AdminForm();
+            adminForm.setVisible(true);
+            this.dispose();
+        } else if (tipo == TipoUsuario.normal) {
+            NormalForm normalForm = new NormalForm(usuario);
+            normalForm.setVisible(true);
+            this.dispose();
+        } else {
+            JOptionPane.showMessageDialog(this, "Tipo de usuario no reconocido.", "Error", JOptionPane.ERROR_MESSAGE);
+        }
     } else {
         JOptionPane.showMessageDialog(this, "Credenciales incorrectas", "Error", JOptionPane.ERROR_MESSAGE);
-    }
+    }                                 
+                                     
     }//GEN-LAST:event_btnAceptarActionPerformed
 
     /**
