@@ -27,7 +27,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/XML/XMLDocument.xml to edit this 
             Admin
         </property>
          
-      <mapping class="mx.itson.citamedica.entities.Usuario"/>  
+      <mapping class="mx.itson.Banco.entities.Usuario"/>  
     </session-factory>
 </hibernate-configuration>
 
