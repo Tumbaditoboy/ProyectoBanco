@@ -24,7 +24,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/XML/XMLDocument.xml to edit this 
             root
         </property>
         <property name="hibernate.connection.password">
-            Admin
+            admin
         </property>
          
       <mapping class="mx.itson.banco.entities.Usuario"/>  

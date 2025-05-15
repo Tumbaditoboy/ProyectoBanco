@@ -105,7 +105,6 @@ public class AdminForm extends javax.swing.JFrame {
         
         for (Usuario u : usuarios){
             modelo.addRow(new Object[] {
-                u.getId(),
                 u.getNombre(),
                 u.getCorreo(),
                 u.getSaldo()
