@@ -52,5 +52,38 @@ public static Usuario getUsuarioPorCredenciales(String correo, String contrasena
     return usuario;
 }
 
+public static boolean save(Usuario u) {
+    boolean resultado = false;
+    Session session = null;
+
+    try {
+        session = HibernateUtil.getSessionFactory().openSession();
+        session.beginTransaction();
+
+        if (u.getId() == 0) {
+            
+            session.save(u);
+        } else {
+            
+            session.update(u);
+        }
+
+        session.getTransaction().commit();
+        resultado = true;
+
+    } catch (Exception ex) {
+        if (session != null && session.getTransaction().isActive()) {
+            session.getTransaction().rollback();
+        }
+        throw ex; // Para que la excepción llegue fuera del DAO
+    } finally {
+        if (session != null) {
+            session.close();
+        }
+    }
+
+    return resultado;
+}
+
     
 }

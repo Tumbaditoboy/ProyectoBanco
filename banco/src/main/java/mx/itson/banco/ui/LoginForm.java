@@ -62,6 +62,11 @@ public class LoginForm extends javax.swing.JFrame {
 
         btnRegistro.setFont(new java.awt.Font("Dialog", 1, 11)); // NOI18N
         btnRegistro.setText("Registrarse");
+        btnRegistro.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRegistroActionPerformed(evt);
+            }
+        });
 
         jLabel4.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         jLabel4.setText("¿Eres un nuevo usuario?");
@@ -146,6 +151,13 @@ public class LoginForm extends javax.swing.JFrame {
     }                                 
                                      
     }//GEN-LAST:event_btnAceptarActionPerformed
+
+    private void btnRegistroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistroActionPerformed
+        RegistroDialog registroDialog = new RegistroDialog(this, true);
+        registroDialog.setVisible(true);
+        
+            
+    }//GEN-LAST:event_btnRegistroActionPerformed
 
     /**
      * @param args the command line arguments
