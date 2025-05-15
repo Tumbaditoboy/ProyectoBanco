@@ -7,6 +7,7 @@ package mx.itson.banco.persistence;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.criteria.CriteriaQuery;
+import mx.itson.banco.encrypt.Hashed;
 import mx.itson.banco.entities.Usuario;
 import mx.itson.banco.utils.HibernateUtil;
 import org.hibernate.Session;
@@ -40,17 +41,30 @@ public static Usuario getUsuarioPorCredenciales(String correo, String contrasena
     Usuario usuario = null;
     try {
         Session session = HibernateUtil.getSessionFactory().openSession();
-        String hql = "FROM Usuario WHERE correo = :correo AND contrasena = :contrasena";
+
+        // Buscar solo por correo
+        String hql = "FROM Usuario WHERE correo = :correo";
         usuario = session.createQuery(hql, Usuario.class)
                 .setParameter("correo", correo)
-                .setParameter("contrasena", contrasena)
                 .uniqueResult();
+
         session.close();
+
+        // Si se encontró el usuario, verificar la contraseña cifrada
+        if (usuario != null) {
+            boolean contrasenaValida = Hashed.compararContrasena(contrasena, usuario.getContrasena());
+            if (!contrasenaValida) {
+                usuario = null; // contrasena incorrecta
+            }
+        }
+
     } catch (Exception ex) {
         System.err.println("Error al obtener el usuario: " + ex.getMessage());
     }
     return usuario;
 }
+
+
 
 public static boolean save(Usuario u) {
     boolean resultado = false;
