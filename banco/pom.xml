@@ -9,7 +9,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>22</maven.compiler.source>
         <maven.compiler.target>22</maven.compiler.target>
-        <exec.mainClass>mx.itson.banco.Banco</exec.mainClass>
+        <exec.mainClass>mx.itson.banco.utils.DockerPrueba</exec.mainClass>
     </properties>   
     <name>Banco</name>
     <dependencies>
