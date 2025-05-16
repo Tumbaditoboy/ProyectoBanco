@@ -90,7 +90,7 @@ public class LoginForm extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(116, 116, 116)
                         .addComponent(jLabel4)))
-                .addContainerGap(91, Short.MAX_VALUE))
+                .addContainerGap(95, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
@@ -120,15 +120,25 @@ public class LoginForm extends javax.swing.JFrame {
                 .addComponent(jLabel4)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnRegistro)
-                .addContainerGap(54, Short.MAX_VALUE))
+                .addContainerGap(57, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    public static boolean esCorreoValido(String correo) {
+    return correo.matches("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$");
+}
+
+    
     private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
     String correo = txtCorreo.getText();
     String contrasena = new String(pswContrasena.getPassword());
+
+    if (!esCorreoValido(txtCorreo.getText())) {
+    JOptionPane.showMessageDialog(this, "Formato de correo incorrecto, Agregue uno acorde", "Error", JOptionPane.ERROR_MESSAGE);
+    return;
+}
 
     Usuario usuario = UsuarioDAO.getUsuarioPorCredenciales(correo, contrasena);
 
