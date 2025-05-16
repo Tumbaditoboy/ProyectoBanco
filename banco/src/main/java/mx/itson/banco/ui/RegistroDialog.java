@@ -6,9 +6,13 @@ package mx.itson.banco.ui;
 
 import java.util.Arrays;
 import javax.swing.JOptionPane;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
+import mx.itson.banco.encrypt.Hashed;
 import mx.itson.banco.entities.Usuario;
 import mx.itson.banco.persistence.UsuarioDAO;
 import mx.itson.banco.utils.TipoUsuario;
+
 
 /**
  *
@@ -16,13 +20,20 @@ import mx.itson.banco.utils.TipoUsuario;
  */
 public class RegistroDialog extends javax.swing.JDialog {
 
-    /**
-     * Creates new form RegistroDIalog
-     */
-    public RegistroDialog(java.awt.Frame parent, boolean modal) {
+public RegistroDialog(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
-    }
+        
+        // Agregar validación en tiempo real para la contraseña
+            pswField1.getDocument().addDocumentListener(new DocumentListener() {
+            public void insertUpdate(DocumentEvent e) { validarPassword(); }
+            public void removeUpdate(DocumentEvent e) { validarPassword(); }
+            public void changedUpdate(DocumentEvent e) { validarPassword(); }
+        
+                    });
+                    
+                    }
+                   
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -58,11 +69,10 @@ public class RegistroDialog extends javax.swing.JDialog {
 
         jLabel5.setText("Confirmar contrasena:");
 
-        jLabel6.setText("Su contrasena debe contener... blablaba para ser aceptada");
+        jLabel6.setText("/");
 
         btnAceptar.setBackground(new java.awt.Color(213, 232, 243));
         btnAceptar.setFont(new java.awt.Font("Dialog", 1, 11)); // NOI18N
-        btnAceptar.setForeground(new java.awt.Color(0, 0, 0));
         btnAceptar.setText("Aceptar");
         btnAceptar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -97,7 +107,7 @@ public class RegistroDialog extends javax.swing.JDialog {
                                         .addComponent(pswField1, javax.swing.GroupLayout.Alignment.LEADING)
                                         .addComponent(txtCorreo, javax.swing.GroupLayout.Alignment.LEADING)
                                         .addComponent(txtNombre, javax.swing.GroupLayout.Alignment.LEADING)))))
-                        .addGap(0, 68, Short.MAX_VALUE)))
+                        .addGap(0, 108, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -123,7 +133,7 @@ public class RegistroDialog extends javax.swing.JDialog {
                 .addComponent(pswField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel6)
-                .addGap(12, 12, 12)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 56, Short.MAX_VALUE)
                 .addComponent(btnAceptar)
                 .addContainerGap())
         );
@@ -132,46 +142,79 @@ public class RegistroDialog extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
-    try{   
-    // Crear nuevo usuario
-    Usuario nuevoUsuario = new Usuario();
-    nuevoUsuario.setNombre(txtNombre.getText());
-    nuevoUsuario.setCorreo(txtCorreo.getText());
-    nuevoUsuario.setSaldo(0);
-    nuevoUsuario.setTipo(TipoUsuario.normal);
+            try {   
+            // Validación de correo antes de continuar
+            if (!esCorreoValido(txtCorreo.getText())) {
+                JOptionPane.showMessageDialog(this, "El correo no tiene un formato válido.", "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
 
-    boolean todoCorrecto = false;
+            Usuario nuevoUsuario = new Usuario();
+            nuevoUsuario.setNombre(txtNombre.getText());
+            nuevoUsuario.setCorreo(txtCorreo.getText());
+            nuevoUsuario.setSaldo(0);
+            nuevoUsuario.setTipo(TipoUsuario.normal);
 
-    try {
-        // Comparar el contenido de los password fields
-        if (!Arrays.equals(pswField1.getPassword(), pswField2.getPassword())) {
-            throw new Exception("Las contraseñas no coinciden.");
-        }
+            boolean todoCorrecto = false;
 
-        // Si coinciden, establecer la contraseña
-        String contrasena = new String(pswField1.getPassword());
-        nuevoUsuario.setContrasena(contrasena);
+            try {
+                // Comparar el contenido de los password fields
+                if (!Arrays.equals(pswField1.getPassword(), pswField2.getPassword())) {
+                    throw new Exception("Las contraseñas no coinciden.");
+                }
 
-        // Marcar que todo está correcto
-        todoCorrecto = true;
+                // Validar la seguridad de la contraseña antes de guardar
+                String contrasena = new String(pswField1.getPassword());
+                if (!esContrasenaValida(contrasena)) {
+                    throw new Exception("La contraseña no cumple con los requisitos de seguridad.");
+                }
 
-    } catch (Exception ex) {
-        JOptionPane.showMessageDialog(null, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-    }
+                // Si todo es correcto, establecer la contraseña cifrada
+                nuevoUsuario.setContrasena(Hashed.encriptarContrasena(contrasena));
+                todoCorrecto = true;
 
-    // Guardar usuario si todo fue correcto
-    if (todoCorrecto) {
-        boolean resultado = UsuarioDAO.save(nuevoUsuario);
-        if (resultado) {
-            JOptionPane.showMessageDialog(null, "Usuario registrado correctamente.");
-            dispose();
-        } else {
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(null, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            }
+
+            // Guardar usuario si todo fue correcto
+            if (todoCorrecto) {
+                boolean resultado = UsuarioDAO.save(nuevoUsuario);
+                if (resultado) {
+                    JOptionPane.showMessageDialog(null, "Usuario registrado correctamente.");
+                    dispose();
+                } else {
+                    JOptionPane.showMessageDialog(null, "Ocurrió un error al guardar el usuario.");
+                }
+            }
+        } catch (Exception ex) {
             JOptionPane.showMessageDialog(null, "Ocurrió un error al guardar el usuario.");
         }
     }
-    }catch (Exception ex) {
-        JOptionPane.showMessageDialog(null, "Ocurrió un error al guardar el usuario.");
+
+    // Método para validar el formato del correo
+    public static boolean esCorreoValido(String correo) {
+        return correo.matches("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$");
     }
+
+    // Método para validar la seguridad de la contraseña
+    public static boolean esContrasenaValida(String contrasena) {
+        return contrasena.matches("^(?=.*[A-Z])(?=.*[a-z])(?=.*\\d)(?=.*[@#$%^&+=!]).{8,}$");
+    }
+
+    // Validación en tiempo real mientras el usuario escribe su contraseña
+    private void validarPassword() {
+        String contrasena = new String(pswField1.getPassword());
+
+        if (!esContrasenaValida(contrasena)) {
+            jLabel6.setText("<html><font color='red'>La contraseña debe tener al menos 8 caracteres, incluyendo mayúsculas, minúsculas, números y un carácter especial.</font></html>");
+        } else {
+            jLabel6.setText("<html><font color='green'> 0_o Contraseña válida.</font></html>");
+        }
+    
+
+    
+
     }//GEN-LAST:event_btnAceptarActionPerformed
 
     /**
